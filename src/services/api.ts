@@ -97,10 +97,10 @@ export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     try {
       const response = await api.post<AuthResponse>('/auth/login', credentials);
-      // Store token and user data
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('userId', response.data.user.id);
+      // Store token and user data in sessionStorage
+      sessionStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+      sessionStorage.setItem('userId', response.data.user.id);
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -113,10 +113,10 @@ export const authApi = {
   register: async (credentials: RegisterCredentials): Promise<AuthResponse> => {
     try {
       const response = await api.post<AuthResponse>('/auth/register', credentials);
-      // Store token and user data
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('userId', response.data.user.id);
+      // Store token and user data in sessionStorage
+      sessionStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('user', JSON.stringify(response.data.user));
+      sessionStorage.setItem('userId', response.data.user.id);
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
@@ -127,17 +127,17 @@ export const authApi = {
   },
 
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('userId');
   },
 
   // Delete current user
   deleteAccount: async (): Promise<void> => {
     await api.delete('/users/me');
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('userId');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('userId');
   },
 };
 

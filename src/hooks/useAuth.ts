@@ -11,9 +11,9 @@ interface AuthState {
 
 export const useAuth = () => {
   const [state, setState] = useState<AuthState>(() => {
-    // Initialize state from localStorage
-    const token = localStorage.getItem('token');
-    const userStr = localStorage.getItem('user');
+    // Initialize state from sessionStorage
+    const token = sessionStorage.getItem('token');
+    const userStr = sessionStorage.getItem('user');
     
     if (token && userStr) {
       try {
@@ -26,8 +26,8 @@ export const useAuth = () => {
         };
       } catch (error) {
         console.error('[DEBUG] Error parsing user data:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
         return {
           user: null,
           token: null,
@@ -59,9 +59,8 @@ export const useAuth = () => {
     const handleTokenInvalid = (event: CustomEvent) => {
       if (!isMounted.current) return;
       
-      
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       
       setState({
         user: null,
@@ -86,9 +85,8 @@ export const useAuth = () => {
   const refreshAuthState = useCallback(() => {
     if (!isMounted.current) return;
 
-    const token = localStorage.getItem('token');
-    const userStr = localStorage.getItem('user');
-    
+    const token = sessionStorage.getItem('token');
+    const userStr = sessionStorage.getItem('user');
     
     if (token && userStr) {
       try {
@@ -101,8 +99,8 @@ export const useAuth = () => {
         });
       } catch (error) {
         console.error('[DEBUG] Error parsing user data during refresh:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
         setState({
           user: null,
           token: null,
@@ -127,12 +125,12 @@ export const useAuth = () => {
       const { token, user } = await authApi.login(credentials);
       
       // Clear any existing data first
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       
       // Set new data
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
       
       // Immediately update state after successful login
       setState({
@@ -156,12 +154,12 @@ export const useAuth = () => {
       const { token, user } = await authApi.register(credentials);
       
       // Clear any existing data first
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       
       // Set new data
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
       
       // Immediately update state after successful registration
       setState({
@@ -182,9 +180,9 @@ export const useAuth = () => {
     if (!isMounted.current) return;
 
     
-    // Clear localStorage first
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    // Clear sessionStorage first
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     
     // Then clear state
     setState({
@@ -204,7 +202,7 @@ export const useAuth = () => {
     try {
       const updatedUser = await userApi.updateProfile(data);
       
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      sessionStorage.setItem('user', JSON.stringify(updatedUser));
       setState(prev => ({
         ...prev,
         user: updatedUser,
