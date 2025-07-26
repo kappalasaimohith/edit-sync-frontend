@@ -13,7 +13,7 @@ const api = axios.create({
 
 // Add request interceptor to add auth token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -30,9 +30,9 @@ api.interceptors.response.use(
       // Handle token-related errors
       if (status === 401 && data.code) {
         // Clear token and user data for specific error codes
-        if (['TOKEN_EXPIRED', 'INVALID_TOKEN', 'USER_NOT_FOUND'].includes(data.code)) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
+        if (["TOKEN_EXPIRED", "INVALID_TOKEN", "USER_NOT_FOUND"].includes(data.code)) {
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
           
           // Dispatch a custom event that components can listen to
           window.dispatchEvent(new CustomEvent('auth:tokenInvalid', { 
@@ -97,10 +97,10 @@ export const authApi = {
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     try {
       const response = await api.post<AuthResponse>('/auth/login', credentials);
-      // Store token and user data in sessionStorage
-      sessionStorage.setItem('token', response.data.token);
-      sessionStorage.setItem('user', JSON.stringify(response.data.user));
-      sessionStorage.setItem('userId', response.data.user.id);
+      // Store token and user data in localStorage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('userId', response.data.user.id);
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -113,10 +113,10 @@ export const authApi = {
   register: async (credentials: RegisterCredentials): Promise<AuthResponse> => {
     try {
       const response = await api.post<AuthResponse>('/auth/register', credentials);
-      // Store token and user data in sessionStorage
-      sessionStorage.setItem('token', response.data.token);
-      sessionStorage.setItem('user', JSON.stringify(response.data.user));
-      sessionStorage.setItem('userId', response.data.user.id);
+      // Store token and user data in localStorage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('userId', response.data.user.id);
       return response.data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
@@ -127,17 +127,17 @@ export const authApi = {
   },
 
   logout: () => {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   },
 
   // Delete current user
   deleteAccount: async (): Promise<void> => {
     await api.delete('/users/me');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   },
 };
 
