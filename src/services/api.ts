@@ -230,9 +230,13 @@ export const documentApi = {
   },
 
   shareDocument: (documentId: string, email: string, options?: { message?: string }) => {
+    const token = localStorage.getItem('token');
     return fetch(`/api/documents/${documentId}/share`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+      "Content-Type": "application/json",
+      ...(token ? { "Authorization": `Bearer ${token}` } : {})
+    },
       body: JSON.stringify({ email, ...options }),
     }).then(res => {
       if (!res.ok) throw new Error("Failed to share document");
