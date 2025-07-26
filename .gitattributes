@@ -1,0 +1,19 @@
+# Treat all files as text and normalize to LF
+* text=auto eol=lf  
+
+# Force LF for code files
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+
+# Binary files - don't normalize line endings
+*.png binary
+*.jpeg binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
