@@ -142,6 +142,15 @@ export const authApi = {
 };
 
 // User API calls
+  // Request password reset
+  export async function requestPasswordReset(email: string) {
+    return api.post('/auth/request-reset', { email });
+  }
+
+  // Reset password
+  export async function resetPassword(token: string, password: string) {
+    return api.post('/auth/reset-password', { token, password });
+  }
 export const userApi = {
   getProfile: async (): Promise<User> => {
     const response = await api.get<User>('/users/profile');

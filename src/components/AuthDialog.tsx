@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import ForgotPasswordDialog from './ForgotPasswordDialog';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -186,37 +187,52 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
     }
   }, [logout, refreshAuthState, onOpenChange]);
 
+  const [showForgotDialog, setShowForgotDialog] = useState(false);
+
   const signInForm = useMemo(() => (
-    <TabsContent value="signin" className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="signin-email">Email</Label>
-        <Input
-          id="signin-email"
-          type="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="signin-password">Password</Label>
-        <Input
-          id="signin-password"
-          type="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={(e) => handleInputChange('password', e.target.value)}
-        />
-      </div>
-      <Button 
-        onClick={handleSignIn} 
-        className="w-full" 
-        disabled={isLoading}
-      >
-        {isLoading ? "Signing In..." : "Sign In"}
-      </Button>
-    </TabsContent>
-  ), [formData.email, formData.password, isLoading, handleSignIn, handleInputChange]);
+    showForgotDialog ? (
+      <ForgotPasswordDialog onClose={() => setShowForgotDialog(false)} />
+    ) : (
+      <TabsContent value="signin" className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="signin-email">Email</Label>
+          <Input
+            id="signin-email"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="signin-password">Password</Label>
+          <Input
+            id="signin-password"
+            type="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={(e) => handleInputChange('password', e.target.value)}
+          />
+        </div>
+        <Button 
+          onClick={handleSignIn} 
+          className="w-full" 
+          disabled={isLoading}
+        >
+          {isLoading ? "Signing In..." : "Sign In"}
+        </Button>
+        <div className="flex justify-end mt-2">
+          <button
+            type="button"
+            className="text-sm text-blue-600 hover:underline bg-transparent border-none p-0 cursor-pointer"
+            onClick={() => setShowForgotDialog(true)}
+          >
+            Forgot Password?
+          </button>
+        </div>
+      </TabsContent>
+    )
+  ), [formData.email, formData.password, isLoading, handleSignIn, handleInputChange, showForgotDialog]);
 
   const signUpForm = useMemo(() => (
     <TabsContent value="signup" className="space-y-4">
@@ -308,24 +324,28 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
           </DialogDescription>
         </DialogHeader>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="relative w-full">
-        <TabsList className="grid w-full grid-cols-2 relative bg-muted p-1 rounded-md overflow-hidden">
-            <div
-              className={`absolute top-0 left-0 h-full w-1/2 bg-white rounded-md shadow transition-all duration-300 ease-in-out transform ${
-                activeTab === "signup" ? "translate-x-full" : "translate-x-0"
-              }`}
-            />
-            <TabsTrigger value="signin" className="z-10">
-              Sign In
-            </TabsTrigger>
-            <TabsTrigger value="signup" className="z-10">
-              Sign Up
-            </TabsTrigger>
-          </TabsList>
-          </div>
+          {!showForgotDialog && (
+            <>
+              <div className="relative w-full">
+                <TabsList className="grid w-full grid-cols-2 relative bg-muted p-1 rounded-md overflow-hidden">
+                  <div
+                    className={`absolute top-0 left-0 h-full w-1/2 bg-white rounded-md shadow transition-all duration-300 ease-in-out transform ${
+                      activeTab === "signup" ? "translate-x-full" : "translate-x-0"
+                    }`}
+                  />
+                  <TabsTrigger value="signin" className="z-10">
+                    Sign In
+                  </TabsTrigger>
+                  <TabsTrigger value="signup" className="z-10">
+                    Sign Up
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+            </>
+          )}
           <div className="transition-all duration-300 ease-in-out animate-fade-slide">
             {activeTab === "signin" && signInForm}
-            {activeTab === "signup" && signUpForm}
+            {!showForgotDialog && activeTab === "signup" && signUpForm}
           </div>
         </Tabs>
       </DialogContent>
