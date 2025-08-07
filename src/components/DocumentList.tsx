@@ -154,25 +154,25 @@ export const DocumentList = ({
   const renderDocumentCard = useCallback((doc: Document) => (
     <Card 
       key={doc.id} 
-      className="hover:shadow-md transition-all duration-200 cursor-pointer hover:border-slate-300"
+      className="hover:shadow-md transition-all duration-200 cursor-pointer hover:border-slate-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900 border border-border"
       onClick={() => handleDocumentClick(doc)}
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <FileText className="w-5 h-5 text-slate-600 mt-1" />
+            <FileText className="w-5 h-5 text-slate-600 dark:text-gray-400 mt-1" />
             <div>
-              <CardTitle className="text-lg font-semibold text-slate-800">
+              <CardTitle className="text-lg font-semibold text-slate-800 dark:text-gray-100">
                 {doc.title}
               </CardTitle>
-              <CardDescription className="flex items-center gap-4 mt-1">
+              <CardDescription className="flex items-center gap-4 mt-1 text-slate-600 dark:text-gray-300">
                 <span className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 text-slate-600 dark:text-gray-400" />
                   {formatDate(doc.updatedAt)}
                 </span>
                 <span>{doc.collaborators?.length || 0} collaborator{doc.collaborators?.length !== 1 ? 's' : ''}</span>
                 {doc.fileType && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs dark:text-gray-200">
                     {getFileTypeDisplay(doc.fileType)}
                   </Badge>
                 )}
@@ -181,7 +181,7 @@ export const DocumentList = ({
           </div>
           <div className="flex items-center gap-2">
             {doc.isPublic && (
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <Badge variant="secondary" className="flex items-center gap-1 dark:text-gray-200">
                 <Share className="w-3 h-3" />
                 Shared
               </Badge>

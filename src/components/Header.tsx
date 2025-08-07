@@ -31,10 +31,10 @@ export const Header = () => {
     }
   }
   return (
-    <header className="border-b">
+    <header className="border-b bg-background dark:bg-card">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold">Edit-Sync</h1>
+          <h1 className="text-xl font-bold text-foreground">Edit-Sync</h1>
         </div>
         
         {isAuthenticated && user && (

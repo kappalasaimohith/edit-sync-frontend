@@ -31,7 +31,7 @@ export const PlainTextPreview = ({ content }: PlainTextPreviewProps) => {
   }
 
   return (
-    <div className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-slate-700 p-4">
+    <div className="whitespace-pre-wrap font-mono text-base leading-relaxed text-slate-700 dark:text-gray-200 p-6 bg-white dark:bg-gray-900 rounded-xl shadow-md border border-border" style={{ minHeight: '300px', transition: 'background-color 0.3s, color 0.3s' }}>
       {formattedContent}
     </div>
   );

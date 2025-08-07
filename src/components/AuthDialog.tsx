@@ -202,6 +202,7 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
             placeholder="Enter your email"
             value={formData.email}
             onChange={(e) => handleInputChange('email', e.target.value)}
+            className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
           />
         </div>
         <div className="space-y-2">
@@ -212,11 +213,12 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
             placeholder="Enter your password"
             value={formData.password}
             onChange={(e) => handleInputChange('password', e.target.value)}
+            className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
           />
         </div>
         <Button 
           onClick={handleSignIn} 
-          className="w-full" 
+          className="w-full bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground"
           disabled={isLoading}
         >
           {isLoading ? "Signing In..." : "Sign In"}
@@ -244,6 +246,7 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
           placeholder="Enter your name"
           value={formData.name}
           onChange={(e) => handleInputChange('name', e.target.value)}
+          className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
         />
       </div>
       <div className="space-y-2">
@@ -254,6 +257,7 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
           placeholder="Enter your email"
           value={formData.email}
           onChange={(e) => handleInputChange('email', e.target.value)}
+          className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
         />
       </div>
       <div className="space-y-2">
@@ -264,6 +268,7 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
           placeholder="Enter your password"
           value={formData.password}
           onChange={(e) => handleInputChange('password', e.target.value)}
+          className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
         />
       </div>
       <div className="space-y-2">
@@ -274,11 +279,12 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
           placeholder="Confirm your password"
           value={formData.confirmPassword}
           onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+          className="bg-card text-foreground border-border placeholder:text-muted-foreground dark:bg-card dark:text-foreground dark:placeholder:text-muted-foreground"
         />
       </div>
       <Button 
         onClick={handleSignUp} 
-        className="w-full" 
+        className="w-full bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground"
         disabled={isLoading}
       >
         {isLoading ? "Creating Account..." : "Create Account"}
@@ -316,7 +322,7 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
   // Show sign in / sign up forms
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-background text-foreground">
         <DialogHeader >
           <DialogTitle>Welcome to Edit-Sync</DialogTitle>
           <DialogDescription>
@@ -329,14 +335,14 @@ export const AuthDialog = ({ open, onOpenChange, onAuthenticated }: AuthDialogPr
               <div className="relative w-full">
                 <TabsList className="grid w-full grid-cols-2 relative bg-muted p-1 rounded-md overflow-hidden">
                   <div
-                    className={`absolute top-0 left-0 h-full w-1/2 bg-white rounded-md shadow transition-all duration-300 ease-in-out transform ${
+                    className={`absolute top-0 left-0 h-full w-1/2 bg-background dark:bg-card rounded-md shadow transition-all duration-300 ease-in-out transform ${
                       activeTab === "signup" ? "translate-x-full" : "translate-x-0"
                     }`}
                   />
-                  <TabsTrigger value="signin" className="z-10">
+                  <TabsTrigger value="signin" className="z-10 text-foreground">
                     Sign In
                   </TabsTrigger>
-                  <TabsTrigger value="signup" className="z-10">
+                  <TabsTrigger value="signup" className="z-10 text-foreground">
                     Sign Up
                   </TabsTrigger>
                 </TabsList>

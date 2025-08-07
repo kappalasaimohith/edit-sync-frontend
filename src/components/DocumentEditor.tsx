@@ -206,7 +206,7 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
   }, [content, title, isMarkdown, isPlainTxt, fileType]);
 
   const header = (
-    <div className="bg-white border-b border-slate-200">
+    <div className="bg-white dark:bg-gray-900 border-b border-slate-200 dark:border-gray-700">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -219,7 +219,7 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Document title"
-                className="text-xl font-semibold border-none bg-transparent"
+                className="text-xl font-semibold border-none bg-transparent dark:text-white dark:placeholder:text-gray-400"
               />
               {hasUnsavedChanges && !isAutosaveEnabled && (
                 <Badge variant="secondary">Unsaved</Badge>
@@ -236,7 +236,7 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
               />
               <Label htmlFor="autosave" className="text-sm text-slate-600 flex items-center gap-1">
                 <Timer className="w-4 h-4" />
-                Autosave
+                <span className="dark:text-gray-300">Autosave</span>
               </Label>
             </div>
 
@@ -282,7 +282,7 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
                   ? "Start writing your text document..." 
                   : "Start writing your document in Markdown..."
               }
-              className="w-full h-full border-none resize-none focus:ring-0 text-base font-mono"
+              className="w-full h-full border-none resize-none focus:ring-0 text-base font-mono bg-white dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400"
             />
           </Card>
         )}
@@ -291,12 +291,14 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
             typeof content !== "string" ? (
               <DocxPreview content={content} />
             ) : (
-              <p className="text-gray-500">Invalid DOCX content.</p>
+              <p className="text-gray-500 dark:text-gray-400">Invalid DOCX content.</p>
             )
           ) : isPlainTxt ? (
             <PlainTextPreview content={typeof content === "string" ? content : ""} />
           ) : (
-            <MarkdownPreview content={typeof content === "string" ? content : ""} />
+            <div className="w-full h-full bg-white dark:bg-gray-900 rounded-lg">
+              <MarkdownPreview content={typeof content === "string" ? content : ""} />
+            </div>
           )}
         </Card>
       </div>
@@ -304,7 +306,7 @@ export const DocumentEditor = ({ document, onBack, onSave }: DocumentEditorProps
   );
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-gray-950">
       {header}
       {editorContent}
       <ShareDialog

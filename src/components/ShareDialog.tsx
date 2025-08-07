@@ -507,7 +507,7 @@ export const ShareDialog = ({ open, onOpenChange, document }: ShareDialogProps) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] bg-background text-foreground">
         <DialogHeader>
           <DialogTitle>Share "{document.title}"</DialogTitle>
           <DialogDescription>

@@ -26,7 +26,7 @@ export default function ForgotPasswordDialog({ onClose }: { onClose: () => void 
   };
 
   return (
-    <div className="p-6 rounded-lg bg-background shadow-lg w-full max-w-md mx-auto">
+    <div className="p-6 rounded-lg bg-background text-foreground shadow-lg w-full max-w-md mx-auto">
       <h2 className="text-xl font-bold mb-4">Forgot Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">

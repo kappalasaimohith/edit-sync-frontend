@@ -87,7 +87,7 @@ export const ImportDocumentDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-background text-foreground">
         <DialogHeader>
           <DialogTitle>Import Document</DialogTitle>
           <DialogDescription>
