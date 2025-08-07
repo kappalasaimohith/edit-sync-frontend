@@ -41,10 +41,11 @@ export const DocumentList = ({
 
   // Fetch documents only once when authenticated
   useEffect(() => {
-    if (isAuthenticated && isMounted.current) {
+    if (isAuthenticated && isMounted.current && !hasFetched.current) {
       fetchDocuments();
+      hasFetched.current = true;
     }
-  }, [isAuthenticated, showSharedOnly, fetchDocuments, refreshTrigger]); // Add showSharedOnly to dependencies
+  }, [isAuthenticated, showSharedOnly, fetchDocuments]);
 
   // Filter documents based on showSharedOnly
   const filteredDocuments = useMemo(() => {
